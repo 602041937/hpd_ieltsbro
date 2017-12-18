@@ -1,0 +1,93 @@
+<!-- prepare a DOM container with width and height -->
+<div id="main" style="width: 100%;height:400px"></div>
+<%= javascript_include_tag 'admin/echarts.min.js' %>
+<script type="text/javascript">
+    // based on prepared DOM, initialize echarts instance
+    var myChart = echarts.init(document.getElementById('main'));
+    var type = ['新增注册数', '新增语音数', '新增正常回忆数', '新增无用回忆数'];
+    var days_array = <%= raw days_array %>;
+    var user_register_array = <%= raw user_register_array %>;
+    var oral_practice_array = <%= raw oral_practice_array%>;
+    var oral_memory_array = <%= raw oral_memory_array%>;
+    var meaningless_oral_memory_array = <%= raw meaningless_oral_memory_array%>;
+
+    var option = {
+        title: {
+            text: '统计图'
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: '#6a7985'
+                }
+            }
+        },
+        legend: {
+            data: type
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: [
+            {
+                type: 'category',
+                boundaryGap: false,
+                data: days_array
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value'
+            }
+        ],
+        series: [
+            {
+                name: type[0],
+                type: 'line',
+                stack: '总量',
+                areaStyle: {normal: {}},
+                data: user_register_array
+            },
+            {
+                name: type[1],
+                type: 'line',
+                stack: '总量',
+                areaStyle: {normal: {}},
+                data: oral_practice_array
+            },
+            {
+                name: type[2],
+                type: 'line',
+                stack: '总量',
+                areaStyle: {normal: {}},
+                data: oral_memory_array
+            },
+            {
+                name: type[3],
+                type: 'line',
+                stack: '总量',
+                areaStyle: {normal: {}},
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'top'
+                    }
+                },
+                data: meaningless_oral_memory_array
+            }
+        ]
+    };
+
+    // use configuration item and data specified to show chart
+    myChart.setOption(option);
+</script>

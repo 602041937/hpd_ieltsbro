@@ -1,0 +1,2 @@
+module WrittenMemoryHelper
+end

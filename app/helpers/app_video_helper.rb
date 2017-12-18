@@ -1,0 +1,2 @@
+module AppVideoHelper
+end
