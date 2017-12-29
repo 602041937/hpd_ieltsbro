@@ -11,17 +11,25 @@ class ApplicationController < ActionController::Base
 
   # 生成用户头像地址url
   def generate_user_avatar_url(user)
-    if user.avatar.blank?
-      return "http://#{request.host_with_port}/app_user/avatar/#{user.id}/user_default"
-    else
-      return "http://#{request.host_with_port}/app_user/avatar/#{user.id}/#{HPDEncryptionUtils.hpd_md5(user.avatar_identifier)}"
 
-    end
+    # 使用本地的图片
+    # if user.avatar.blank?
+    #   return "http://#{request.host_with_port}/app_user/avatar/#{user.id}/user_default"
+    # else
+    #   return "http://#{request.host_with_port}/app_user/avatar/#{user.id}/#{HPDEncryptionUtils.hpd_md5(user.avatar_identifier)}"
+    # end
+
+    # 使用阿里云的oss的图片
+    return user.avatar.url
   end
 
   # 生成用户语音评论地址url
   def generate_user_oral_practice_comment_url(comment)
+    # 使用本地存储
     return "http://#{request.host_with_port}/app_user/oral_practice_question_comments/#{comment.id}"
+
+    #使用阿里云的oss存储
+    return comment.audio_record.url
   end
 
   @@user_cache={}

@@ -118,7 +118,7 @@ device_uid,device_name, app_version,system_version, verify_mobile_provider, devi
     # !!! 这句在数据中存储的是文件名：例如：20171026_204107_crop.jpg
     user.avatar = avatar
     if user.save
-      render json: {status: 0, usericon: generate_user_avatar_url(user), message: "头像上传成功"}
+      render json: {status: 0, usericon: user.avatar, message: "头像上传成功"}
       return
     end
     render json: {status: 1, message: "头像上传失败"}
@@ -137,8 +137,12 @@ device_uid,device_name, app_version,system_version, verify_mobile_provider, devi
     end
     user.username = username if !username.blank?
     user.avatar = avatar if !avatar.blank?
+    p "======!!"
     if user.save
-      render json: {status: 0, usericon: generate_user_avatar_url(user), username: user.username}
+      p "======"
+      p user.avatar.url
+      p "ddd"
+      render json: {status: 0, usericon: user.avatar.url, username: user.username}
       return
     end
     render json: {status: 1, message: "修改失败"}
@@ -423,15 +427,9 @@ device_uid,device_name, app_version,system_version, verify_mobile_provider, devi
 
 
   def test
-    content = <<-HPD
-      {"name":"hpd"}
-    HPD
-    tokens = ["807490c1b2263e104acd45186c369035"]
-    #send_slient_message(content, tokens)
-    #broadcast_slient_message(content)
-    #send_notification_message("hpdtitle2", "hpdbody2", content, tokens)
-    broadcast_notification_message("hpdtitl2e", "hpdbod2y", tokens)
-    return render json: content
+    a =
+    p a
+    return render json: {name: "hpd"}
   end
 
 end

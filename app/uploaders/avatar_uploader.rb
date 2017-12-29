@@ -6,23 +6,35 @@ class AvatarUploader < CarrierWave::Uploader::Base
 
   # Choose what kind of storage to use for this uploader:
   # 存储的类型是文件
-  storage :file
+
+  #存在本地
+  #storage :file
+
+  #存在阿里云的oss
+  storage :aliyun
+
+
   # storage :fog
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   # 图片存放的位置
   def store_dir
-   "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+    if Rails.env.production?
+      "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+    else
+      "development/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+    end
+
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
-  # def default_url(*args)
-  #   # For Rails 3.1+ asset pipeline compatibility:
-  #   # ActionController::Base.helpers.asset_path("fallback/" + [version_name, "default.png"].compact.join('_'))
-  #
-  #   "/images/fallback/" + [version_name, "default.png"].compact.join('_')
-  # end
+  def default_url(*args)
+    # For Rails 3.1+ asset pipeline compatibility:
+    # ActionController::Base.helpers.asset_path("fallback/" + [version_name, "default.png"].compact.join('_'))
+    # "/images/fallback/" + [version_name, "default.png"].compact.join('_')
+    "http://hpd-ieltsbro.oss-cn-shenzhen.aliyuncs.com/uploads/app_user/avatar/default_user_icon.png"
+  end
 
   # Process files as they are uploaded:
   # process scale: [200, 300]
@@ -44,9 +56,11 @@ class AvatarUploader < CarrierWave::Uploader::Base
   # end
 
   # Override the filename of the uploaded files:
-  # Avoid using model.id or version_name here, see uploader/store.rb for details.
-  # def filename
-  #   "something.jpg" if original_filename
-  # end
+  # # Avoid using model.id or version_name here, see uploader/store.rb for details.
+  def filename
+    p "===="
+    p original_filename
+    "#{model.id}__#{Time.now.to_i}.#{original_filename.split(".").last}" if original_filename
+  end
 
 end

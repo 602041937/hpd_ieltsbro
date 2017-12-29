@@ -14,11 +14,11 @@ AppUser.create(username: "xay", password: "e10adc3949ba59abbe56e057f20f883e", mo
 
 rows = []
 100.times {|index|
-  rows.insert(index, "(#{index+3}, 'user#{index+3}', '#{index%2+1}', 'e10adc3949ba59abbe56e057f20f883e',
+  rows.insert(index, "('user#{index+3}', '#{index%2+1}', 'e10adc3949ba59abbe56e057f20f883e',
                       '123456789#{index+3}', '86', #{index%4+1}, #{index%9+1}, #{index%66+1},'#{Time.now}','#{Time.now}')")
 }
 # 构造SQL语句用于执行
-sql = "INSERT INTO app_users (id,username,sex,password,mobile,zone,app_destination_id,app_exam_date_id,app_exam_location_id,created_at,updated_at) VALUES #{rows.join(",")}"
+sql = "INSERT INTO app_users (username,sex,password,mobile,zone,app_destination_id,app_exam_date_id,app_exam_location_id,created_at,updated_at) VALUES #{rows.join(",")}"
 # 执行SQL语句
 ActiveRecord::Base.connection.execute sql
 
@@ -406,10 +406,10 @@ ActiveRecord::Base.connection.execute sql
 
 AppVideoCategory.destroy_all
 AppVideoCategory.create!([
-                             { name: "一条"},
-                             { name: "学好"},
-                             { name: "活好"},
-                             { name: "玩好"}
+                             {name: "一条"},
+                             {name: "学好"},
+                             {name: "活好"},
+                             {name: "玩好"}
                          ])
 
 
@@ -453,4 +453,4 @@ AppDestinationCountry.create([{name: "中国"}, {name: "英国"}, {name: "美国
 #   {pos: "9", type_method: "app_version", option: {f:true,c:false}},
 #   {pos: "c", type_method: "device_system", option: {"0":true, "8":false}}
 # ])
-AdminUser.create!(email: 'hpd@hpd.com', password: '123456', password_confirmation: '123456') if Rails.env.development?
+AdminUser.create!(email: 'hpd@hpd.com', password: '123456', password_confirmation: '123456')

@@ -64,6 +64,9 @@ gem 'pry-byebug'
 #start 图片上传
 gem 'carrierwave'
 #end
+#start 图片上传,使用阿里云的oss
+gem 'carrierwave-aliyun'
+#end
 #start reids缓存
 gem 'redis'
 #end
