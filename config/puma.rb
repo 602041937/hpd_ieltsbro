@@ -52,7 +52,7 @@ environment ENV.fetch("RAILS_ENV") { "development" }
 # end
 #
 
- #daemonize true
+ daemonize true
 
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
